@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "Inter-Weather",
+    "slug": "inter-weather",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.irispersorg.interweather"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.irispersorg.interweather"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c56336b8-79e3-4e5a-b72b-82042eda606a"
+      }
+    },
+    "owner": "irispers-org",
+    "updates": {
+      "url": "https://u.expo.dev/c56336b8-79e3-4e5a-b72b-82042eda606a"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
