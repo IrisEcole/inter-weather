@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link, Redirect } from 'expo-router';
-import { onAuthStateChanged, signInWithEmailAndPassword, User } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, User } from "firebase/auth";
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
@@ -8,6 +8,7 @@ import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 
 export default function Sign_up() {
+        const [userName, setUserName] = React.useState('');
         const [email, setEmail] = React.useState('');
         const [password, setPassword] = React.useState('');
         const [loading, setLoading] = React.useState(false);
@@ -23,16 +24,22 @@ export default function Sign_up() {
         if (user) {
                 return <Redirect href="/" />;
         }
-
-        const signIn = async () => {
+        const register = async () => {
                 setLoading(true);
+
                 try {
-                        const response = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+                        const response = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password).then(async (userCredential) => {
+                                const userCred = userCredential.user;
+                                await updateProfile(userCred, {
+                                        displayName: userName,
+                                });
+                                console.log(userName);
+
+                        })
                         console.log(response);
-                        return;
                 } catch (error: any) {
                         console.error(error);
-                        alert("Log in Failed" + error.message)
+                        alert("Registration Failed" + error.message)
                 } finally {
                         setLoading(false);
                 }
@@ -46,6 +53,12 @@ export default function Sign_up() {
                 <View style={styles.main}>
                         <View style={styles.center}>
 
+                                <Text style={{ paddingBottom: 30, fontSize: 24, flexWrap: 'nowrap' }}> Join InterWeather</Text>
+                                <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Name </Text>
+                                <TextInput
+                                        style={styles.input}
+                                        onChangeText={setUserName}
+                                />
                                 <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Email </Text>
                                 <TextInput
                                         style={styles.input}
@@ -70,10 +83,9 @@ export default function Sign_up() {
                                 />
 
                                 {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
-                                        <TouchableOpacity style={styles.button} onPress={signIn} >
-                                                        <Text>Log in</Text>
-                                                </TouchableOpacity>
-
+                                        <TouchableOpacity style={styles.button} onPress={register} >
+                                                <Text>Register</Text>
+                                        </TouchableOpacity>
                                 </>
                                 )}
                                 <View style={{
@@ -82,16 +94,10 @@ export default function Sign_up() {
                                         flexWrap: 'wrap',
                                         paddingTop: 20
                                 }}>
+                                        <Text style={{ fontSize: 18 }}> Already have an account ? </Text>
+                                        <Link style={{ fontSize: 18, color: 'blue' }} href="/login">login</Link>
                                 </View>
-                                              <View style={{
-                                                                        backgroundColor: 'transparent',
-                                                                        flexDirection: 'row',
-                                                                        flexWrap: 'wrap',
-                                                                        paddingTop: 20
-                                                                }}>
-                                                                        <Text style={{ fontSize: 18 }}> Don't have an account ? </Text>
-                                                                        <Link style={{ fontSize: 18, color: 'blue' }} href="/register">register</Link>
-                                                                </View>
+
                                 <View style={{ paddingBottom: 100 }}></View>
                         </View>
                 </View>

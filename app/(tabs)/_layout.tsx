@@ -1,10 +1,11 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
 import { onAuthStateChanged, User } from "firebase/auth";
 import React from 'react';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
-
-
 
 export default function TabLayout() {
   const [user, setUser] = React.useState<User | null>(null);
@@ -28,7 +29,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color='blue'/>,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />,
         }}
       />
      
@@ -37,7 +38,7 @@ export default function TabLayout() {
         options={{
           title: 'Account',
           href: user? '/account' : null,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="account-circle" size={24} color="black" />,
         }}
       />
 <Tabs.Screen
@@ -45,7 +46,15 @@ export default function TabLayout() {
         options={{
           title: 'Login',
           href: user? null : '/login',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="login" size={24} color="black" />,
+        }}
+      />
+      <Tabs.Screen
+        name="register"
+        options={{
+          title: 'Register',
+          href: user? null : '/register',
+          tabBarIcon: ({ color }) => <Ionicons name="person-add-outline" size={24} color="black" />,
         }}
       />
      

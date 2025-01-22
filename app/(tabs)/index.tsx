@@ -22,6 +22,13 @@ export default function HomeApp() {
   const [colorBottom, setColorBottom] = React.useState('#FFE570');
   const [weather, setWeather] = React.useState<weather>();
 
+    //User persistence 
+    React.useEffect(() => {
+      onAuthStateChanged(FIREBASE_AUTH, (user) => {
+        setUser(user);
+      });
+    }, []);
+
   const getLoc = async () => {
     try {
       const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
@@ -144,12 +151,7 @@ export default function HomeApp() {
     getWeather();
   }, [selectedCity]);
 
-  //User persistence 
-  React.useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      setUser(user);
-    });
-  }, []);
+
 
 
 
@@ -161,7 +163,7 @@ export default function HomeApp() {
         style={styles.background}>
 
         <View style={styles.center}>
-          <Text style={styles.welcome}> {user ? 'Welcome Back' : 'Welcome Guest'}</Text>
+          <Text style={styles.welcome}> {FIREBASE_AUTH.currentUser?.displayName ? ('Welcome back ' + FIREBASE_AUTH.currentUser?.displayName + '!') : 'Welcome !'}</Text>
           <Text style={styles.selectedCity}>
             {selectedCity === null ? '' : selectedCity?.name}
           </Text>
@@ -187,7 +189,6 @@ export default function HomeApp() {
                 onChangeText={setCity}
                 value={city}
                 placeholder={selectedCity === undefined  ? "Enter the name of a city" : "Search for a different city"}
-                keyboardType="numeric"
                 onSubmitEditing={getLoc}
               />
               {suggestions.length > 0 && (
