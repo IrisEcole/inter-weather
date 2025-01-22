@@ -1,7 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { onAuthStateChanged, User } from "firebase/auth";
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { FIREBASE_AUTH } from "../../firebaseConfig";
+
 
 interface cities {
   name: string; country: string; state: string; lat: string; lon: string;
@@ -11,13 +14,13 @@ interface weather {
   temp: string; feelTemp: string; maxTemp: string, minTemp: string, description: string, iconURL: string
 }
 export default function HomeApp() {
-  const [city, changeCity] = React.useState('');
-  const [user, changeUser] = React.useState(false);
+  const [city, setCity] = React.useState('');
+  const [user, setUser] = React.useState<User | null>(null);
   const [suggestions, setSuggestions] = React.useState<cities[]>([]);
-  const [selectedCity, changeSelectedCity] = React.useState<cities>();
+  const [selectedCity, setSelectedCity] = React.useState<cities>();
   const [colorTop, setColorTop] = React.useState('#5DCCD8');
   const [colorBottom, setColorBottom] = React.useState('#FFE570');
-  const [weather, changeWeather] = React.useState<weather>();
+  const [weather, setWeather] = React.useState<weather>();
 
   const getLoc = async () => {
     try {
@@ -27,7 +30,7 @@ export default function HomeApp() {
       );
       const json = await response.json();
       setSuggestions([]);
-      changeCity('');
+      setCity('');
       const tempCity = ({
         name: json[0].name,
         country: json[0].country,
@@ -35,7 +38,7 @@ export default function HomeApp() {
         lat: json[0].lat,
         lon: json[0].lon,
       });
-      changeSelectedCity(tempCity);
+      setSelectedCity(tempCity);
       return;
     } catch (error) {
       console.error(error);
@@ -77,8 +80,8 @@ export default function HomeApp() {
   }, [city]);
 
   const handleSelectCity = (city: any) => {
-    changeCity(''); // Display the selected city name in the input
-    changeSelectedCity(city); // Store the full city object
+    setCity(''); // Display the selected city name in the input
+    setSelectedCity(city); // Store the full city object
     setSuggestions([]); // Clear suggestions
   };
 
@@ -119,7 +122,7 @@ export default function HomeApp() {
               setColorBottom("#2F373D");
             }
           }
-          //Clouds change
+          //Clouds set
           if (json.clouds.all <= 25) {
             setColorTop("#65D9E6");
           } else if (json.clouds.all <= 50) {
@@ -129,7 +132,7 @@ export default function HomeApp() {
           } else {
             setColorTop("#488F96");
           }
-          changeWeather(formatWeather)
+          setWeather(formatWeather)
         } catch (error) {
           console.error(error);
           throw (error);
@@ -141,6 +144,14 @@ export default function HomeApp() {
     getWeather();
   }, [selectedCity]);
 
+  //User persistence 
+  React.useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      setUser(user);
+    });
+  }, []);
+
+
 
   return (
 
@@ -150,14 +161,14 @@ export default function HomeApp() {
         style={styles.background}>
 
         <View style={styles.center}>
-          <Text> {user ? 'Welcome name' : 'Welcome Guest'}</Text>
+          <Text style={styles.welcome}> {user ? 'Welcome Back' : 'Welcome Guest'}</Text>
           <Text style={styles.selectedCity}>
             {selectedCity === null ? '' : selectedCity?.name}
           </Text>
-          <Text style={{ fontSize: 30 }}>
+          <Text style={{ fontSize: 30, paddingTop: 10 }}>
             {weather === undefined ? '' : weather?.temp + '°C '}
           </Text>
-          <Text style={{ fontSize: 15 }}>
+          <Text style={{ fontSize: 15, paddingTop: 10  }}>
             {weather === undefined ? '' : 'Feels like ' + weather?.feelTemp + '°C ' + 'Max: ' + weather?.maxTemp + '°C ' + 'Min: ' + weather?.maxTemp + '°C'}
           </Text>
           <Image style={styles.weatherIcon}
@@ -173,9 +184,9 @@ export default function HomeApp() {
             <SafeAreaView>
               <TextInput
                 style={styles.input}
-                onChangeText={changeCity}
+                onChangeText={setCity}
                 value={city}
-                placeholder={selectedCity === null === null ? "Enter the name of a city" : "Search for a different city"}
+                placeholder={selectedCity === undefined  ? "Enter the name of a city" : "Search for a different city"}
                 keyboardType="numeric"
                 onSubmitEditing={getLoc}
               />
@@ -226,14 +237,15 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    borderColor: '#235789',
+    borderRadius: 20,
     padding: 10,
     marginBottom: 10,
     marginTop: 10,
-    width: 200,
+    width: 300,
     alignSelf: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    outlineColor: "#235789",
   },
   suggestionItem: {
     padding: 10,
@@ -244,6 +256,11 @@ const styles = StyleSheet.create({
   },
   selectedCity: {
     marginTop: 20,
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+  welcome: {
+    marginTop: 35,
     fontSize: 26,
     fontWeight: 'bold',
   },
