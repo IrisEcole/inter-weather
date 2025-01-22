@@ -1,18 +1,14 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link, Redirect } from 'expo-router';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, User } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { RegisterForm } from '../components/registerForm';
 
 
 
 export default function Sign_up() {
-        const [userName, setUserName] = React.useState('');
-        const [email, setEmail] = React.useState('');
-        const [password, setPassword] = React.useState('');
-        const [loading, setLoading] = React.useState(false);
-        const [showPassword, setShowPassword] = React.useState(false);
+
         const [user, setUser] = React.useState<User | null>(null);
 
         //User persistence 
@@ -24,70 +20,13 @@ export default function Sign_up() {
         if (user) {
                 return <Redirect href="/" />;
         }
-        const register = async () => {
-                setLoading(true);
-
-                try {
-                        const response = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password).then(async (userCredential) => {
-                                const userCred = userCredential.user;
-                                await updateProfile(userCred, {
-                                        displayName: userName,
-                                });
-                                console.log(userName);
-
-                        })
-                        console.log(response);
-                } catch (error: any) {
-                        console.error(error);
-                        alert("Registration Failed" + error.message)
-                } finally {
-                        setLoading(false);
-                }
-        };
-
-        const toggleShowPassword = () => {
-                setShowPassword(!showPassword);
-        };
-
+        
         return (
                 <View style={styles.main}>
                         <View style={styles.center}>
 
                                 <Text style={{ paddingBottom: 30, fontSize: 24, flexWrap: 'nowrap' }}> Join InterWeather</Text>
-                                <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Name </Text>
-                                <TextInput
-                                        style={styles.input}
-                                        onChangeText={setUserName}
-                                />
-                                <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Email </Text>
-                                <TextInput
-                                        style={styles.input}
-                                        keyboardType="email-address"
-                                        onChangeText={setEmail}
-                                />
-
-                                <View style={styles.passwordContainer}>
-                                        <Text style={{ fontSize: 18 }}> Password </Text>
-                                        <MaterialCommunityIcons
-                                                name={showPassword ? 'eye-off' : 'eye'}
-                                                size={24}
-                                                color="#aaa"
-                                                onPress={toggleShowPassword}
-                                        />
-                                </View>
-                                <TextInput
-                                        secureTextEntry={!showPassword}
-
-                                        style={styles.input}
-                                        onChangeText={setPassword}
-                                />
-
-                                {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
-                                        <TouchableOpacity style={styles.button} onPress={register} >
-                                                <Text>Register</Text>
-                                        </TouchableOpacity>
-                                </>
-                                )}
+                                <RegisterForm></RegisterForm>
                                 <View style={{
                                         backgroundColor: 'transparent',
                                         flexDirection: 'row',

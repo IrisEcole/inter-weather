@@ -1,7 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, User } from 'firebase/auth';
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
