@@ -12,8 +12,6 @@ interface weather {
 }
 export default function HomeApp() {
   const [city, changeCity] = React.useState('');
-  const [lat, changeLat] = React.useState(null);
-  const [lon, changeLon] = React.useState(null);
   const [user, changeUser] = React.useState(false);
   const [suggestions, setSuggestions] = React.useState<cities[]>([]);
   const [selectedCity, changeSelectedCity] = React.useState<cities>();
@@ -28,10 +26,6 @@ export default function HomeApp() {
         url,
       );
       const json = await response.json();
-      const lat = json[0].lat;
-      const lon = json[0].lon;
-      changeLat(lat);
-      changeLon(lon);
       setSuggestions([]);
       changeCity('');
       const tempCity = ({
@@ -63,12 +57,11 @@ export default function HomeApp() {
       const formattedSuggestions = data.map((item: { name: any; country: any; state: any; lat: any; lon: any; }) => ({
         name: item.name,
         country: item.country,
-        state: item.state || '', // Add a default value if state is not available
+        state: item.state || '', 
         lat: item.lat,
         lon: item.lon,
       }));
-
-      setSuggestions(formattedSuggestions); // Assuming the API returns an array of city suggestions
+      setSuggestions(formattedSuggestions); 
     } catch (error) {
       console.error('Error fetching city suggestions:', error);
     }
@@ -85,19 +78,15 @@ export default function HomeApp() {
 
   const handleSelectCity = (city: any) => {
     changeCity(''); // Display the selected city name in the input
-    changeLat(city.lat);
-    changeLon(city.lon);
     changeSelectedCity(city); // Store the full city object
     setSuggestions([]); // Clear suggestions
   };
 
-
-
   React.useEffect(() => {
     const getWeather = async () => {
-      if (lat != null) {
+      if (selectedCity !== undefined) {
         try {
-          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
+          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=metric&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
           const response = await fetch(
             url,
           );
@@ -141,8 +130,6 @@ export default function HomeApp() {
             setColorTop("#488F96");
           }
           changeWeather(formatWeather)
-          return 1;
-          //return json.movies;
         } catch (error) {
           console.error(error);
           throw (error);
@@ -152,7 +139,7 @@ export default function HomeApp() {
     };
 
     getWeather();
-  }, [lat, lon]);
+  }, [selectedCity]);
 
 
   return (
@@ -188,7 +175,7 @@ export default function HomeApp() {
                 style={styles.input}
                 onChangeText={changeCity}
                 value={city}
-                placeholder={lat === null ? "Enter the name of a city" : "Search for a different city"}
+                placeholder={selectedCity === null === null ? "Enter the name of a city" : "Search for a different city"}
                 keyboardType="numeric"
                 onSubmitEditing={getLoc}
               />
