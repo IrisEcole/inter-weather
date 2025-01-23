@@ -18,13 +18,15 @@ export default function TabLayout() {
   }, []);
 
   return (
-    <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: 'blue', tabBarStyle: {
-      backgroundColor: 'white',
-      position: 'absolute',
-      borderTopWidth: 0,
-      elevation: 0,
-      opacity: 0.7,
-      },}} >
+    <Tabs screenOptions={{
+      headerShown: false, tabBarActiveTintColor: 'blue', tabBarStyle: {
+        backgroundColor: 'white',
+        position: 'absolute',
+        borderTopWidth: 0,
+        elevation: 0,
+        opacity: 0.7,
+      },
+    }} >
       <Tabs.Screen
         name="index"
         options={{
@@ -32,20 +34,19 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-circle-outline" size={24} color="black" />,
         }}
       />
-     
-<Tabs.Screen
+      <Tabs.Screen
         name="account"
         options={{
           title: 'Account',
-          href: user? '/account' : null,
+          href: user ? '/account' : null,
           tabBarIcon: ({ color }) => <MaterialIcons name="account-circle" size={24} color="black" />,
         }}
       />
-<Tabs.Screen
+      <Tabs.Screen
         name="login"
         options={{
           title: 'Login',
-          href: user? null : '/login',
+          href: user ? null : '/login',
           tabBarIcon: ({ color }) => <AntDesign name="login" size={24} color="black" />,
         }}
       />
@@ -53,13 +54,10 @@ export default function TabLayout() {
         name="register"
         options={{
           title: 'Register',
-          href: user? null : '/register',
+          href: user ? null : '/register',
           tabBarIcon: ({ color }) => <Ionicons name="person-add-outline" size={24} color="black" />,
         }}
       />
-     
-      
-     
     </Tabs>
   );
 }

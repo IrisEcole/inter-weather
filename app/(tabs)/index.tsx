@@ -1,5 +1,8 @@
+import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React from 'react';
@@ -11,7 +14,7 @@ interface cities {
 }
 
 interface weather {
-  temp: string; feelTemp: string; maxTemp: string, minTemp: string, description: string, iconURL: string, humidity:string
+  temp: string; feelTemp: string; maxTemp: string, minTemp: string, description: string, iconURL: string, humidity: string, visibility: string, windSpeed: string, cloudCoverage: string
 }
 export default function HomeApp() {
   const [city, setCity] = React.useState('');
@@ -22,12 +25,12 @@ export default function HomeApp() {
   const [colorBottom, setColorBottom] = React.useState('#FFE570');
   const [weather, setWeather] = React.useState<weather>();
 
-    //User persistence 
-    React.useEffect(() => {
-      onAuthStateChanged(FIREBASE_AUTH, (user) => {
-        setUser(user);
-      });
-    }, []);
+  //User persistence 
+  React.useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      setUser(user);
+    });
+  }, []);
 
   const getLoc = async () => {
     try {
@@ -67,11 +70,11 @@ export default function HomeApp() {
       const formattedSuggestions = data.map((item: { name: any; country: any; state: any; lat: any; lon: any; }) => ({
         name: item.name,
         country: item.country,
-        state: item.state || '', 
+        state: item.state || '',
         lat: item.lat,
         lon: item.lon,
       }));
-      setSuggestions(formattedSuggestions); 
+      setSuggestions(formattedSuggestions);
     } catch (error) {
       console.error('Error fetching city suggestions:', error);
     }
@@ -110,6 +113,9 @@ export default function HomeApp() {
             description: json.weather[0].main,
             iconURL: formatIconURL,
             humidity: json.main.humidity,
+            visibility: json.visibility,
+            windSpeed: json.wind.speed,
+            cloudCoverage: json.clouds.all,
           });
           //See logic explanation in repo
           // Day time Vs Night, Rain and Snow
@@ -164,17 +170,17 @@ export default function HomeApp() {
           <Text style={styles.selectedCity}>
             {selectedCity === null ? '' : selectedCity?.name}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-          <Text style={{ fontSize: 30, paddingTop: 10 }}>
-            {weather === undefined ? '' : weather?.temp + '°C '}
-          </Text>
-          <FontAwesome6 name="temperature-half" size={24} color="black" />
-</View>
-          
-          <Text style={{ fontSize: 15, paddingTop: 10  }}>
+          {(weather !== undefined) && <View style={{ flexDirection: 'row' }}>
+            <Text style={{ fontSize: 30, paddingTop: 10 }}>
+              {weather === undefined ? '' : weather?.temp + '°C '}
+            </Text>
+            <FontAwesome6 name="temperature-half" size={24} style={{ marginTop: 17 }} color="black" />
+          </View>
+          }
+          <Text style={{ fontSize: 15, paddingTop: 8 }}>
             {weather === undefined ? '' : 'Feels like: ' + weather?.feelTemp + '°C'}
           </Text>
-          <Text style={{ fontSize: 15, paddingTop: 10  }}>
+          <Text style={{ fontSize: 15, paddingTop: 5 }}>
             {weather === undefined ? '' : 'Max: ' + weather?.maxTemp + '°C ' + 'Min: ' + weather?.maxTemp + '°C'}
           </Text>
           <Image style={styles.weatherIcon}
@@ -182,42 +188,63 @@ export default function HomeApp() {
               uri: weather?.iconURL
             }} >
           </Image>
-          <Text style={{ fontSize: 20 }}>
+          <Text style={{ fontSize: 24 }}>
             {weather?.description}
           </Text>
-          <View style={{flexDirection: 'row'}}>
-          <Text style={{ fontSize: 14, paddingTop: 10 }}>
-            {weather === undefined ? '' : 'Humidity: ' + weather.humidity + '%'}
-          </Text>
-          <Ionicons name="water-outline" size={19} style={{marginTop:7}} color="black" />
+          {(weather !== undefined) &&
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ fontSize: 14, paddingTop: 10 }}>
+                {weather === undefined ? '' : 'Humidity: ' + weather.humidity + '% '}
+              </Text>
+              <Ionicons name="water-outline" size={17} style={{ marginTop: 7 }} color="black" />
+            </View>}
+          {(weather !== undefined) &&
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ fontSize: 14, paddingTop: 10 }}>
+                {weather === undefined ? '' : 'Cloud Coverage: ' + weather.cloudCoverage + '% '}
+              </Text>
+              <Feather name="cloud" size={17} style={{ marginTop: 7 }} color="black" />
+            </View>}
+          {(weather !== undefined) &&
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ fontSize: 14, paddingTop: 10 }}>
+                {weather === undefined ? '' : 'Wind speed: ' + weather.windSpeed + 'm/s '}
+              </Text>
+              <Fontisto name="wind" size={17} style={{ marginTop: 7 }} color="black" />
+            </View>}
+          {(weather !== undefined) &&
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ fontSize: 14, paddingTop: 10 }}>
+                {weather === undefined ? '' : 'Visibility: ' + weather.visibility + 'km '}
+              </Text>
+              <MaterialIcons name="visibility" size={17} style={{ marginTop: 7,  paddingBottom: 10}} color="black" />
+            </View>}
+          <TextInput
+            testID="0"
+            style={styles.input}
+            onChangeText={setCity}
+            value={city}
+            placeholder={selectedCity === undefined ? "Enter the name of a city" : "Search for a different city"}
+            onSubmitEditing={getLoc}
+          />
+          {suggestions.length > 0 && (
+            <FlatList
+              data={suggestions}
+              keyExtractor={(item, index) => `${item.name}-${item.country}-${index}`}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.suggestionItem}
+                  onPress={() => handleSelectCity(item)}
 
-          </View>
-              <TextInput
-                testID="0"
-                style={styles.input}
-                onChangeText={setCity}
-                value={city}
-                placeholder={selectedCity === undefined  ? "Enter the name of a city" : "Search for a different city"}
-                onSubmitEditing={getLoc}
-              />
-              {suggestions.length > 0 && (
-                <FlatList
-                  data={suggestions}
-                  keyExtractor={(item, index) => `${item.name}-${item.country}-${index}`}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      style={styles.suggestionItem}
-                      onPress={() => handleSelectCity(item)}
-
-                    >
-                      <Text>{`${item.name}, ${item.state}, ${item.country}`}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
+                >
+                  <Text>{`${item.name}, ${item.state}, ${item.country}`}</Text>
+                </TouchableOpacity>
               )}
-                                          <View style={{ paddingBottom: 100 }}></View>
+            />
+          )}
+          <View style={{ paddingBottom: 100 }}></View>
 
-        </View>        
+        </View>
       </LinearGradient>
     </View>
 
@@ -269,7 +296,7 @@ const styles = StyleSheet.create({
   },
   selectedCity: {
     marginTop: 20,
-    fontSize: 26,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   welcome: {
@@ -278,7 +305,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   weatherIcon: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
   },
 });
