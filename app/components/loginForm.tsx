@@ -88,3 +88,6 @@ const styles = StyleSheet.create({
                 alignSelf: 'stretch',
         },
 });
+
+
+export default Loginform;

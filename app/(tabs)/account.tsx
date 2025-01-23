@@ -35,7 +35,7 @@ export default function Account() {
                         alert("Registration Failed" + error.message)
                 } finally {
                         setLoading(false);
-                        setUserName('');
+                        setUserName("");
                 }
         };
         return (

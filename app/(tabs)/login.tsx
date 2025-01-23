@@ -3,7 +3,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
-import { Loginform } from '../components/loginForm';
+import Loginform from '../components/loginForm';
 
 export default function Login() {
         const [user, setUser] = React.useState<User | null>(null);

@@ -1,5 +1,5 @@
-import Login from '@/app/(tabs)/login';
 import { render } from '@testing-library/react-native';
+import Register from '../(tabs)/register';
 
 
 jest.mock("@expo/vector-icons", () => ({
@@ -10,11 +10,13 @@ jest.mock("@expo/vector-icons", () => ({
 
 describe('<Login />', () => {
   test('Text renders correctly on Account', async () => {
-    const { getByText} = render(<Login />);
+    const { getByText} = render(<Register />);
+    getByText('Join InterWeather');
+    getByText('Name');
     getByText('Email');
     getByText('Password');
-    getByText('Log in');
-    getByText("Don't have an account ?");
-    getByText('register');
+    getByText('Register');
+    getByText("Already have an account ?");
+    getByText('login');
   });
 });
