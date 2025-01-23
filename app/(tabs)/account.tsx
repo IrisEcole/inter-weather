@@ -122,6 +122,7 @@ export default function Sign_up() {
                                                         <Text style={{ marginBottom: 15, textAlign: 'center', }}>Hello World!</Text>
                                                         <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Email </Text>
                                                         <TextInput
+                                                        testID="0"
                                                                 style={styles.input}
                                                                 keyboardType="email-address"
                                                                 onChangeText={setEmail}

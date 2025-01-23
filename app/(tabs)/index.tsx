@@ -2,7 +2,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 
@@ -48,7 +47,7 @@ export default function HomeApp() {
       setSelectedCity(tempCity);
       return;
     } catch (error) {
-      console.error(error);
+      console.log(error);
       throw new Error("Location not found");
     }
   };
@@ -181,10 +180,8 @@ export default function HomeApp() {
           <Text style={{ fontSize: 20 }}>
             {weather?.description}
           </Text>
-
-          <SafeAreaProvider>
-            <SafeAreaView>
               <TextInput
+                testID="0"
                 style={styles.input}
                 onChangeText={setCity}
                 value={city}
@@ -205,8 +202,7 @@ export default function HomeApp() {
                   )}
                 />
               )}
-            </SafeAreaView>
-          </SafeAreaProvider>
+
         </View>
       </LinearGradient>
     </View>
