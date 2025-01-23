@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { RegisterForm } from '../components/registerForm';
 
-export default function Sign_up() {
+export default function Register() {
         const [user, setUser] = React.useState<User | null>(null);
 
         //User persistence 

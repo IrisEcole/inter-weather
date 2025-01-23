@@ -6,7 +6,7 @@ import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { DeleteAccountForm } from "../components/DeleteAccountForm";
 
 
-export default function Sign_up() {
+export default function Account() {
         const [user, setUser] = React.useState<User | null>(null);
         const [loading, setLoading] = React.useState(false);
         const [userName, setUserName] = React.useState('');
