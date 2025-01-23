@@ -5,10 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { Loginform } from '../components/loginForm';
 
-
-
 export default function Sign_up() {
-
         const [user, setUser] = React.useState<User | null>(null);
 
         //User persistence 

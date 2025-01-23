@@ -6,7 +6,6 @@ import { ActivityIndicator, Alert, Modal, Pressable, StyleSheet, Text, TextInput
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 
-
 export const DeleteAccountForm = () => {
         const [loading, setLoading] = React.useState(false);
         const [email, setEmail] = React.useState('');
@@ -24,10 +23,10 @@ export const DeleteAccountForm = () => {
                 });
         }, []);
 
-                if (!user) {
-                        return <Redirect href="/" />;
-                }
-        
+        if (!user) {
+                return <Redirect href="/" />;
+        }
+
         const closeDeleteForm = () => {
                 setEmail('');
                 setPassword('');
@@ -58,7 +57,7 @@ export const DeleteAccountForm = () => {
                 setShowPassword(!showPassword);
         };
         return (
-                <View style={{alignSelf:'flex-start'}}>
+                <View style={{ alignSelf: 'flex-start' }}>
                         <TouchableOpacity style={styles.button} onPress={() => setDeleteUserModalVisible(true)} >
                                 <Text>Delete Your Account</Text>
                         </TouchableOpacity>
@@ -72,7 +71,7 @@ export const DeleteAccountForm = () => {
                                 }}>
                                 <View style={styles.centeredView}>
                                         <View style={styles.modalView}>
-                                                <Text style={{ marginBottom: 15, textAlign: 'center',  fontSize:22 }}>Please confirm email and password</Text>
+                                                <Text style={{ marginBottom: 15, textAlign: 'center', fontSize: 22 }}>Please confirm email and password</Text>
                                                 <Text style={{ alignSelf: 'flex-start', fontSize: 18 }} > Email </Text>
                                                 <TextInput
                                                         style={styles.input}
@@ -116,27 +115,7 @@ export const DeleteAccountForm = () => {
         )
 }
 
-
-
 const styles = StyleSheet.create({
-        background: {
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                top: 0,
-                height: '100%',
-        },
-        main: {
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-        },
-        center: {
-                width: '25%',
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-        },
         input: {
                 borderWidth: 1,
                 borderColor: '#235789',
@@ -148,21 +127,6 @@ const styles = StyleSheet.create({
                 textAlign: 'left',
                 outlineColor: "#235789",
                 alignSelf: 'flex-start'
-        }, ggestionItem: {
-                padding: 10,
-                borderBottomWidth: 1,
-                borderBottomColor: '#ccc',
-                width: 200,
-                alignSelf: 'center',
-        },
-        selectedCity: {
-                marginTop: 20,
-                fontSize: 26,
-                fontWeight: 'bold',
-        },
-        weatherIcon: {
-                width: 60,
-                height: 60,
         },
         button: {
                 alignItems: 'center',
@@ -172,15 +136,6 @@ const styles = StyleSheet.create({
                 alignSelf: 'flex-start',
                 marginBottom: 20
 
-        },
-
-        buttonUpdate: {
-                alignItems: 'center',
-                backgroundColor: '#DDDDDD',
-                padding: 10,
-                borderRadius: 20,
-                width: 200,
-                marginBottom: 20
         },
         passwordContainer: {
                 flexDirection: 'row',

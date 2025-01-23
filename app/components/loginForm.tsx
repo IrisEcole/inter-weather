@@ -5,15 +5,10 @@ import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 
-
-
-
-
-export const Loginform = () =>  {
+export const Loginform = () => {
         const [email, setEmail] = React.useState('');
         const [password, setPassword] = React.useState('');
         const [loading, setLoading] = React.useState(false);
-
         const [showPassword, setShowPassword] = React.useState(false);
 
         const toggleShowPassword = () => {
@@ -71,16 +66,6 @@ export const Loginform = () =>  {
 
 
 const styles = StyleSheet.create({
-        main: {
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-        },
-        center: {
-                height: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-        },
         input: {
                 borderWidth: 1,
                 borderColor: '#235789',

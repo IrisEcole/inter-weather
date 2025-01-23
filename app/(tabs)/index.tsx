@@ -4,7 +4,6 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { onAuthStateChanged, User } from 'firebase/auth';
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
@@ -18,19 +17,11 @@ interface weather {
 }
 export default function HomeApp() {
   const [city, setCity] = React.useState('');
-  const [user, setUser] = React.useState<User | null>(null);
   const [suggestions, setSuggestions] = React.useState<cities[]>([]);
   const [selectedCity, setSelectedCity] = React.useState<cities>();
   const [colorTop, setColorTop] = React.useState('#5DCCD8');
   const [colorBottom, setColorBottom] = React.useState('#FFE570');
   const [weather, setWeather] = React.useState<weather>();
-
-  //User persistence 
-  React.useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      setUser(user);
-    });
-  }, []);
 
   const getLoc = async () => {
     try {
@@ -217,7 +208,7 @@ export default function HomeApp() {
               <Text style={{ fontSize: 14, paddingTop: 10 }}>
                 {weather === undefined ? '' : 'Visibility: ' + weather.visibility + 'km '}
               </Text>
-              <MaterialIcons name="visibility" size={17} style={{ marginTop: 7,  paddingBottom: 10}} color="black" />
+              <MaterialIcons name="visibility" size={17} style={{ marginTop: 7, paddingBottom: 10 }} color="black" />
             </View>}
           <TextInput
             testID="0"

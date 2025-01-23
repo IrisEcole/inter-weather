@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
                 borderRadius: 20,
                 alignSelf: 'flex-start',
                 marginBottom: 20
-
         },
         buttonUpdate: {
                 alignItems: 'center',
@@ -106,6 +105,6 @@ const styles = StyleSheet.create({
                 borderRadius: 20,
                 width: 200,
                 marginBottom: 20,
-                fontSize:16
+                fontSize: 16
         },
 });
