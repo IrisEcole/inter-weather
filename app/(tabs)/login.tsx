@@ -29,7 +29,7 @@ export default function Login() {
                                         paddingTop: 20
                                 }}>
                                         <Text style={{ fontSize: 18 }}> Don't have an account ? </Text>
-                                        <Link style={{ fontSize: 18, color: 'blue' }} href="/register">register</Link>
+                                                <Link style={{ fontSize: 18, color: 'blue' }} href="/register">register</Link>
                                 </View>
                                 <View style={{ paddingBottom: 10 }}></View>
                         </View>

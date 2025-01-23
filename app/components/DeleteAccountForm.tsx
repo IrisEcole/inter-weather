@@ -95,7 +95,7 @@ export const DeleteAccountForm = () => {
                                                         onChangeText={setPassword}
                                                 />
 
-                                                {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
+                                                {loading ? <ActivityIndicator /> : (<>
                                                         <TouchableOpacity style={styles.button} onPress={() => HandleDeleteUser()} >
                                                                 <Text>Delete your account</Text>
                                                         </TouchableOpacity>

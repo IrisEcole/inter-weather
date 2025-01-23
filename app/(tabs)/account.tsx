@@ -47,11 +47,11 @@ export default function Account() {
                                         style={styles.input}
                                         keyboardType="email-address"
                                         onChangeText={setUserName}
-                                        placeholder={user?.displayName !== null ? (user?.displayName) : ""}
+                                        placeholder={user?.displayName !== null ? (user.displayName) : ""}
                                         value={userName}
                                         placeholderTextColor={'grey'}
                                 />
-                                {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
+                                {loading ? <ActivityIndicator /> : (<>
                                         <TouchableOpacity style={styles.buttonUpdate} onPress={updateUserName} >
                                                 <Text>Save Changes</Text>
                                         </TouchableOpacity>
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
                 justifyContent: 'center',
         },
         center: {
-                width: '25%',
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',

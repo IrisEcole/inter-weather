@@ -65,7 +65,7 @@ export const RegisterForm = () => {
                                 onChangeText={setPassword}
                         />
 
-                        {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
+                        {loading ? <ActivityIndicator /> : (<>
                                 <TouchableOpacity style={styles.button} onPress={register} >
                                         <Text>Register</Text>
                                 </TouchableOpacity>

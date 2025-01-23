@@ -18,8 +18,7 @@ export const Loginform = () => {
         const signIn = async () => {
                 setLoading(true);
                 try {
-                        const response = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-                        console.log(response);
+                        await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
                         return;
                 } catch (error: any) {
                         console.error(error);
@@ -53,7 +52,7 @@ export const Loginform = () => {
                                 onChangeText={setPassword}
                         />
 
-                        {loading ? (<ActivityIndicator> </ActivityIndicator>) : (<>
+                        {loading ? <ActivityIndicator /> : (<>
                                 <TouchableOpacity style={styles.button} onPress={signIn} >
                                         <Text>Log in</Text>
                                 </TouchableOpacity>
