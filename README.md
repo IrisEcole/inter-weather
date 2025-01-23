@@ -7,26 +7,27 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 * React Native
 * Firebase JS SDK
 
-# RoadMap
- Markup : - [ ] Testing
-             - [x] Text Render
-             - [ ] Mock Firebase auth 
-                - [ ] Auth Component unit test
-                - [ ] Authenticated user pages and component (Account, Delete Account) testing
-                - [ ] General auth user page access test
-                - [ ] Dynamic user info on Index and Account Page
-         - [ ] Functions
-            - [ ] Add possibility to choose between celcius and fareneight
-            - [ ] Fix home page drop down option render, empty space because of state
-            - [ ] Add about page
-            - [ ] Auth functions
-               - [ ] Registration email confirmation
-               - [ ] Change password
-               - [ ] Change email
-               - [ ] Add profile pic support
-         - [ ] Design
-            - [ ] Uniform theme, font family
-            - [ ] Account, Login, Register pages added design
+# RoadMap                        
+- [ ] Testing
+  - [x] Text Render
+    - [ ] Mock Firebase auth 
+    - [ ] Auth Component unit test
+    - [ ] Authenticated user pages and component (Account, Delete Account) testing
+    - [ ] General auth user page access test
+    - [ ] Dynamic user info on Index and Account Page
+- [ ] Functions
+  - [ ] Add possibility to choose between celcius and fareneight
+  - [ ] Fix home page drop down option render, empty space because of state
+  - [ ] Add about page
+  - [ ] Auth functions
+    - [ ] Registration email confirmation
+    - [ ] Change password
+    - [ ] Change email
+    - [ ] Add profile pic support
+- [ ] Design
+  - [ ] Uniform theme, font family
+  - [ ] Account, Login, Register pages added design
+            
 
 # Get started 
 1. Install dependencies
