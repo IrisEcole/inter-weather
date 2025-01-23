@@ -5,10 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { RegisterForm } from '../components/registerForm';
 
-
-
 export default function Sign_up() {
-
         const [user, setUser] = React.useState<User | null>(null);
 
         //User persistence 
@@ -54,26 +51,5 @@ const styles = StyleSheet.create({
                 height: '100%',
                 alignItems: 'center',
                 justifyContent: 'center',
-        },
-        input: {
-                borderWidth: 1,
-                borderColor: '#235789',
-                borderRadius: 20,
-                padding: 10,
-                marginBottom: 20,
-                marginTop: 10,
-                width: 300,
-                textAlign: 'left',
-                outlineColor: "#235789",
-        }, button: {
-                alignItems: 'center',
-                backgroundColor: '#DDDDDD',
-                padding: 10,
-                borderRadius: 20,
-                width: 90,
-        },
-        passwordContainer: {
-                flexDirection: 'row',
-                alignSelf: 'stretch',
         },
 });

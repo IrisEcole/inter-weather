@@ -34,10 +34,9 @@ export default function Sign_up() {
                                         <Text style={{ fontSize: 18 }}> Don't have an account ? </Text>
                                         <Link style={{ fontSize: 18, color: 'blue' }} href="/register">register</Link>
                                 </View>
-                                <View style={{ paddingBottom: 100 }}></View>
+                                <View style={{ paddingBottom: 10 }}></View>
                         </View>
                 </View>
-
         );
 }
 

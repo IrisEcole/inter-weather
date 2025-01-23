@@ -1,16 +1,17 @@
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
-
 interface cities {
   name: string; country: string; state: string; lat: string; lon: string;
 }
 
 interface weather {
-  temp: string; feelTemp: string; maxTemp: string, minTemp: string, description: string, iconURL: string
+  temp: string; feelTemp: string; maxTemp: string, minTemp: string, description: string, iconURL: string, humidity:string
 }
 export default function HomeApp() {
   const [city, setCity] = React.useState('');
@@ -107,7 +108,8 @@ export default function HomeApp() {
             maxTemp: json.main.temp_max,
             minTemp: json.main.temp_min,
             description: json.weather[0].main,
-            iconURL: formatIconURL
+            iconURL: formatIconURL,
+            humidity: json.main.humidity,
           });
           //See logic explanation in repo
           // Day time Vs Night, Rain and Snow
@@ -144,14 +146,10 @@ export default function HomeApp() {
           throw (error);
         }
       }
-
     };
 
     getWeather();
   }, [selectedCity]);
-
-
-
 
 
   return (
@@ -166,11 +164,18 @@ export default function HomeApp() {
           <Text style={styles.selectedCity}>
             {selectedCity === null ? '' : selectedCity?.name}
           </Text>
+          <View style={{flexDirection: 'row'}}>
           <Text style={{ fontSize: 30, paddingTop: 10 }}>
             {weather === undefined ? '' : weather?.temp + '°C '}
           </Text>
+          <FontAwesome6 name="temperature-half" size={24} color="black" />
+</View>
+          
           <Text style={{ fontSize: 15, paddingTop: 10  }}>
-            {weather === undefined ? '' : 'Feels like ' + weather?.feelTemp + '°C ' + 'Max: ' + weather?.maxTemp + '°C ' + 'Min: ' + weather?.maxTemp + '°C'}
+            {weather === undefined ? '' : 'Feels like: ' + weather?.feelTemp + '°C'}
+          </Text>
+          <Text style={{ fontSize: 15, paddingTop: 10  }}>
+            {weather === undefined ? '' : 'Max: ' + weather?.maxTemp + '°C ' + 'Min: ' + weather?.maxTemp + '°C'}
           </Text>
           <Image style={styles.weatherIcon}
             source={{
@@ -180,6 +185,13 @@ export default function HomeApp() {
           <Text style={{ fontSize: 20 }}>
             {weather?.description}
           </Text>
+          <View style={{flexDirection: 'row'}}>
+          <Text style={{ fontSize: 14, paddingTop: 10 }}>
+            {weather === undefined ? '' : 'Humidity: ' + weather.humidity + '%'}
+          </Text>
+          <Ionicons name="water-outline" size={19} style={{marginTop:7}} color="black" />
+
+          </View>
               <TextInput
                 testID="0"
                 style={styles.input}
@@ -196,14 +208,16 @@ export default function HomeApp() {
                     <TouchableOpacity
                       style={styles.suggestionItem}
                       onPress={() => handleSelectCity(item)}
+
                     >
                       <Text>{`${item.name}, ${item.state}, ${item.country}`}</Text>
                     </TouchableOpacity>
                   )}
                 />
               )}
+                                          <View style={{ paddingBottom: 100 }}></View>
 
-        </View>
+        </View>        
       </LinearGradient>
     </View>
 
@@ -245,11 +259,13 @@ const styles = StyleSheet.create({
     outlineColor: "#235789",
   },
   suggestionItem: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    width: 200,
+    padding: 5,
+    margin: 5,
+    width: 300,
     alignSelf: 'center',
+    opacity: 0.6,
+    backgroundColor: 'white',
+    borderRadius: 20,
   },
   selectedCity: {
     marginTop: 20,
