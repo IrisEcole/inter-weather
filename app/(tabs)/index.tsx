@@ -233,7 +233,9 @@ export default function HomeApp() {
                   onPress={() => handleSelectCity(item)}
 
                 >
-                  <Text>{`${item.name}, ${item.state}, ${item.country}`}</Text>
+                  <Text>
+                  {item.state === '' ? `${item.name}, ${item.country}` : `${item.name}, ${item.state}, ${item.country}`}
+                 </Text>
                 </TouchableOpacity>
               )}
             />
