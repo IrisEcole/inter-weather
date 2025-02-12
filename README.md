@@ -1,4 +1,6 @@
 # InterWeather is an Expo app 👋
+Here is the deployment link: https://inter-weather.expo.app/
+
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -17,7 +19,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     - [ ] Dynamic user info on Index and Account Page
 - [ ] Functions
   - [ ] Add possibility to choose between celcius and fareneight
-  - [ ] Fix home page drop down option render, empty space because of state
+  - [X] Fix home page drop down option render, empty space because of state
   - [ ] Add about page
   - [ ] Auth functions
     - [ ] Registration email confirmation
