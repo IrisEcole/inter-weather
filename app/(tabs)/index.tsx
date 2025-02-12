@@ -8,6 +8,8 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 
+
+
 interface cities {
   name: string; country: string; state: string; lat: string; lon: string;
 }
@@ -25,9 +27,10 @@ export default function HomeApp() {
 
   const getLoc = async () => {
     try {
-      const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
+      const url = `/api/location?name=${city}}`;
       const response = await fetch(
         url,
+        {method: "POST"}
       );
       const json = await response.json();
       setSuggestions([]);
@@ -53,9 +56,10 @@ export default function HomeApp() {
       return;
     }
     try {
-      const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
+      const url = `/api/location?name=${city}}`;
       const response = await fetch(
         url,
+        {method: "POST"}
       );
       const data = await response.json();
       const formattedSuggestions = data.map((item: { name: any; country: any; state: any; lat: any; lon: any; }) => ({
@@ -90,10 +94,11 @@ export default function HomeApp() {
     const getWeather = async () => {
       if (selectedCity !== undefined) {
         try {
-          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${selectedCity.lat}&lon=${selectedCity.lon}&units=metric&appid=${process.env.EXPO_PUBLIC_OPEN_WEATHER_API_KEY}`;
-          const response = await fetch(
-            url,
-          );
+          const url = `/api/weather?lat=${selectedCity.lat}&lon=${selectedCity.lon}`;
+      const response = await fetch(
+        url,
+        {method: "POST"}
+      );
           const json = await response.json();
           const formatIconURL = `https://openweathermap.org/img/wn/${json.weather[0].icon}@2x.png`;
           const formatWeather = ({
